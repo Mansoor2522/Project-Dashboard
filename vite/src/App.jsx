@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Line, Bar, Pie } from 'react-chartjs-2';
 import { Chart, registerables } from 'chart.js';
 import { Spinner } from 'react-bootstrap';
-import './Dashboard.css';
+import './App.css';
 
 Chart.register(...registerables);
 
@@ -152,55 +152,58 @@ function Dashboard() {
   }
 
   return (
+    <div className="dashboard-container">
     <div className="dashboard">
-      <h1>Vehicles Dashboard</h1>
+      <h1 className="dashboard-heading">Vehicles Dashboard</h1>
 
       {/* Filters */}
       <div className="filters">
-        <label>
-          Filter by Make:
-          <select value={makeFilter} onChange={(e) => setMakeFilter(e.target.value)}>
-            <option value="">All</option>
-            {Array.from(new Set(tableData.map((item) => item.Make))).map((make) => (
-              <option key={make} value={make}>
-                {make}
-              </option>
-            ))}
-          </select>
-        </label>
+  <label>
+    Filter by Make:
+    <select value={makeFilter} onChange={(e) => setMakeFilter(e.target.value)}>
+      <option value="">All</option>
+      {Array.from(new Set(tableData.map((item) => item.Make))).map((make) => (
+        <option key={make} value={make}>
+          {make}
+        </option>
+      ))}
+    </select>
+  </label>
 
-        <label>
-          Model Year Range:
-          <input
-            type="number"
-            placeholder="Start Year"
-            value={yearRange[0]}
-            onChange={(e) => setYearRange([Number(e.target.value), yearRange[1]])}
-          />
-          <input
-            type="number"
-            placeholder="End Year"
-            value={yearRange[1]}
-            onChange={(e) => setYearRange([yearRange[0], Number(e.target.value)])}
-          />
-        </label>
-      </div>
+  <label>
+    Model Year Range:
+    <input
+      type="number"
+      placeholder="Start Year"
+      value={yearRange[0]}
+      onChange={(e) => setYearRange([Number(e.target.value), yearRange[1]])}
+    />
+    <input
+      type="number"
+      placeholder="End Year"
+      value={yearRange[1]}
+      onChange={(e) => setYearRange([yearRange[0], Number(e.target.value)])}
+    />
+  </label>
+</div>
+
 
       {/* Key Metrics Section */}
       <div className="metrics">
-        <div className="metric">
-          <h3>Total Vehicles</h3>
-          <p>{metrics.totalVehicles}</p>
-        </div>
-        <div className="metric">
-          <h3>Average Price</h3>
-          <p>${metrics.avgPrice}</p>
-        </div>
-        <div className="metric">
-          <h3>Model Year Range</h3>
-          <p>{metrics.yearRange}</p>
-        </div>
-      </div>
+  <div className="metric total-vehicles">
+    <h3>Total Vehicles</h3>
+    <p>{metrics.totalVehicles}</p>
+  </div>
+  <div className="metric avg-price">
+    <h3>Average Price</h3>
+    <p>${metrics.avgPrice}</p>
+  </div>
+  <div className="metric year-range">
+    <h3>Model Year Range</h3>
+    <p>{metrics.yearRange}</p>
+  </div>
+</div>
+
 
       {/* Line Chart */}
       <div className="chart-container">
@@ -242,6 +245,7 @@ function Dashboard() {
           ))}
         </tbody>
       </table>
+    </div>
     </div>
   );
 }
